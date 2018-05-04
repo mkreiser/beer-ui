@@ -82,6 +82,7 @@ class App extends React.Component {
                     _.map(this.state.data, (beer, index) => (
                       <span key={ index }>
                         <Badge
+                          className="badge"
                           badgeContent={ beer.ranking }
                           badgeStyle={{
                             position: 'unset',
@@ -100,8 +101,12 @@ class App extends React.Component {
                           <ListItem
                             primaryText={ `${beer.brewery} ${beer.name}` }
                             secondaryText={ beer.type }
-                            containerElement="div"
-                            style={{ flexGrow: 1 }}
+                            containerElement="span"
+                            style={{
+                              flexGrow: 1,
+                              marginLeft: '16px',
+                              paddingLeft: '0'
+                            }}
                           />
                         </Badge>
                         { index === this.state.data.length - 1 ? null : <Divider /> }
