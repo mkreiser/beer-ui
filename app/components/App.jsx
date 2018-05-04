@@ -64,10 +64,14 @@ class App extends React.Component {
             />
             <CardText>
               <List
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center'
-                }}
+                style={
+                  this.state.loading ?
+                  {
+                    display: 'flex',
+                    justifyContent: 'center'
+                  } :
+                  null
+                }
               >
                 {
                   this.state.loading ?
