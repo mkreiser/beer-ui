@@ -49,13 +49,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div
-        className="app"
-        style={{
-          backgroundColor: this.state.color
-        }}
-      >
-        <div className="app-container">
+      <div className="app">
+        <div
+          className="app-container"
+          style={{ backgroundColor: this.state.color }}
+        >
         <Paper zDepth={2}>
           <Card>
             <CardTitle
