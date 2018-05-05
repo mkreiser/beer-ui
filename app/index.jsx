@@ -14,8 +14,8 @@ const render = (Component) => {
   );
 };
 
-// axios.defaults.baseURL = 'https://kreiserbeerserver.herokuapp.com/';
-axios.defaults.baseURL = 'http://localhost:8000/';
+axios.defaults.baseURL = 'https://kreiserbeerserver.herokuapp.com/';
+// axios.defaults.baseURL = 'http://localhost:8000/';
 
 render(Root);
 
