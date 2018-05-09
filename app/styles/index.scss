@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 $padding-large: 25px;
+$transition-duration: .5s;
 
 * {
   font-family: 'Open Sans', sans-serif;
@@ -22,6 +23,9 @@ html, body {
   padding: $padding-large;
 }
 
-.badge > div {
-  width: 100%;
+.color-fade, .badge-color-fade > span {
+  -moz-transition: background-color $transition-duration ease-in, color $transition-duration ease-in;
+  -o-transition: background-color $transition-duration ease-in, color $transition-duration ease-in;
+  -webkit-transition: background-color $transition-duration ease-in, color $transition-duration ease-in;
+  transition: background-color $transition-duration ease-in, color $transition-duration ease-in;
 }

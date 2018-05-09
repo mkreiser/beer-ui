@@ -97,6 +97,7 @@ class App extends React.Component {
             } }
             leftIcon={
               <Badge
+                className="badge-color-fade"
                 badgeContent={ beer.ranking }
                 badgeStyle={ { backgroundColor: this.state.color } }
                 style={ {
@@ -114,10 +115,12 @@ class App extends React.Component {
 
     const popupActions = [
       <FlatButton
+        className="color-fade"
         label="Edit"
         style={ { color: this.state.color } }
       />,
       <FlatButton
+        className="color-fade"
         label="Close"
         onClick={ () => {
           this.updateColor();
@@ -149,7 +152,7 @@ class App extends React.Component {
 
     return (
       <div
-        className="app"
+        className="app color-fade"
         style={ { backgroundColor: this.state.color } }
       >
         <div className="app-container">
