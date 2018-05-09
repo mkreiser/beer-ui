@@ -1,7 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
 import React from 'react';
-import { renderRoutes } from 'react-router-config';
 
 import Badge from 'material-ui/Badge';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
@@ -43,7 +42,7 @@ class App extends React.Component {
   }
 
   handleBeerUpdate(beer) {
-    axios.put(`beers/mixBeer/${beer.id}/`, this.state.activeBeer).then((response) => {
+    axios.put(`beers/mixBeer/${beer.id}/`, this.state.activeBeer).then(() => {
       this.getBeers();
       this.setState({ activeBeer: null });
     }).catch((error) => {
@@ -67,82 +66,91 @@ class App extends React.Component {
 
   render() {
     const error = this.state.error ?
-      <Snackbar
-        open={ _.some(this.state.error) }
-        message={ this.state.error.message }
-        autoHideDuration={ 5000 }
-      /> :
+      (
+        <Snackbar
+          open={ _.some(this.state.error) }
+          message={ this.state.error.message }
+          autoHideDuration={ 5000 }
+        />
+      ) :
       null;
 
-    const content = this.state.loading ?
-      <CircularProgress
-        color={ this.state.color }
-        size={30}
-      /> :
-        this.state.error ?
-        this.state.error.message :
-        _.map(this.state.data, (beer, index) => (
-          <span key={ index }>
-            <ListItem
-              primaryText={ `${beer.brewery} ${beer.name}` }
-              secondaryText={ beer.type }
-              onClick={ () => this.setState({ activeBeer: beer }) }
-              leftIcon={
-                <Badge
-                  badgeContent={ beer.ranking }
-                  badgeStyle={{ backgroundColor: this.state.color }}
-                  style={{
-                    padding: 0,
-                    paddingLeft: '34px',
-                    width: 0
-                  }}
-                />
-              }
-            />
-            { index === this.state.data.length - 1 ? null : <Divider /> }
-          </span>
-        ));
+    let content;
+    if (this.state.loading) {
+      content = (
+        <CircularProgress
+          color={ this.state.color }
+          size={ 30 }
+        />
+      );
+    } else if (this.state.error) {
+      content = this.state.error.message;
+    } else {
+      content = _.map(this.state.data, (beer, index) => (
+        <span key={ index }>
+          <ListItem
+            primaryText={ `${beer.brewery} ${beer.name}` }
+            secondaryText={ beer.type }
+            onClick={ () => this.setState({ activeBeer: beer }) }
+            leftIcon={
+              <Badge
+                badgeContent={ beer.ranking }
+                badgeStyle={ { backgroundColor: this.state.color } }
+                style={ {
+                  padding: 0,
+                  paddingLeft: '34px',
+                  width: 0
+                } }
+              />
+            }
+          />
+          { index === this.state.data.length - 1 ? null : <Divider /> }
+        </span>
+      ));
+    }
 
     const popupActions = [
       <FlatButton
         label="Edit"
-        style={{ color: this.state.color }}
+        style={ { color: this.state.color } }
       />,
       <FlatButton
         label="Close"
         onClick={ () => this.setState({ activeBeer: null }) }
-        style={{ color: this.state.color }}
+        style={ { color: this.state.color } }
       />
     ];
 
     const popup = this.state.activeBeer ?
-      <Dialog
-        title={ `${this.state.activeBeer.brewery} ${this.state.activeBeer.name}` }
-        actions={ popupActions }
-        open={ _.some(this.state.activeBeer) }
-        onRequestClose={ () => this.setState({ activeBeer: null }) }
-      >
-        <List>
-          <ListItem disabled style={{ padding: '10px 0' }}>{ `Type: ${this.state.activeBeer.type}` }</ListItem>
-          <ListItem disabled style={{ padding: '10px 0' }}>{ `Brewed in: ${this.state.activeBeer.city}, ${this.state.activeBeer.state} ${this.state.activeBeer.country}` }</ListItem>
-          <ListItem disabled style={{ padding: '10px 0' }}>{ `Professional Critque:\n\n${this.state.activeBeer.comments}` }</ListItem>
-        </List>
-      </Dialog> :
-      null
+      (
+        <Dialog
+          title={ `${this.state.activeBeer.brewery} ${this.state.activeBeer.name}` }
+          actions={ popupActions }
+          open={ _.some(this.state.activeBeer) }
+          onRequestClose={ () => this.setState({ activeBeer: null }) }
+        >
+          <List>
+            <ListItem disabled style={ { padding: '10px 0' } }>{ `Type: ${this.state.activeBeer.type}` }</ListItem>
+            <ListItem disabled style={ { padding: '10px 0' } }>{ `Brewed in: ${this.state.activeBeer.city}, ${this.state.activeBeer.state} ${this.state.activeBeer.country}` }</ListItem>
+            <ListItem disabled style={ { padding: '10px 0' } }>{ `Professional Critque:\n\n${this.state.activeBeer.comments}` }</ListItem>
+          </List>
+        </Dialog>
+      ) :
+      null;
 
     return (
       <div
         className="app"
-        style={{ backgroundColor: this.state.color }}
+        style={ { backgroundColor: this.state.color } }
       >
         <div className="app-container">
           { error }
           { popup }
-          <Paper zDepth={2}>
+          <Paper zDepth={ 2 }>
             <Card>
               <CardTitle
                 title="The Beer List"
-                style={{ paddingBottom: '0' }}
+                style={ { paddingBottom: '0' } }
               />
               <CardText>
                 <List
@@ -164,6 +172,6 @@ class App extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default App;
