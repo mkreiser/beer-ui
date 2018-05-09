@@ -91,7 +91,10 @@ class App extends React.Component {
           <ListItem
             primaryText={ `${beer.brewery} ${beer.name}` }
             secondaryText={ beer.type }
-            onClick={ () => this.setState({ activeBeer: beer }) }
+            onClick={ () => {
+              this.updateColor();
+              this.setState({ activeBeer: beer });
+            } }
             leftIcon={
               <Badge
                 badgeContent={ beer.ranking }
@@ -116,7 +119,10 @@ class App extends React.Component {
       />,
       <FlatButton
         label="Close"
-        onClick={ () => this.setState({ activeBeer: null }) }
+        onClick={ () => {
+          this.updateColor();
+          this.setState({ activeBeer: null });
+        } }
         style={ { color: this.state.color } }
       />
     ];
@@ -127,7 +133,10 @@ class App extends React.Component {
           title={ `${this.state.activeBeer.brewery} ${this.state.activeBeer.name}` }
           actions={ popupActions }
           open={ _.some(this.state.activeBeer) }
-          onRequestClose={ () => this.setState({ activeBeer: null }) }
+          onRequestClose={ () => {
+            this.updateColor();
+            this.setState({ activeBeer: null });
+          } }
         >
           <List>
             <ListItem disabled style={ { padding: '10px 0' } }>{ `Type: ${this.state.activeBeer.type}` }</ListItem>
